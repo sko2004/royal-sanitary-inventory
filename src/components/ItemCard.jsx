@@ -1,5 +1,6 @@
 import React from 'react'
-import { Plus, Minus, Pencil } from 'lucide-react'
+import { Plus, Minus, Pencil, Clock } from 'lucide-react'
+import { timeAgo } from '../utils'
 
 export default function ItemCard({ item, onAdjust, onEdit }) {
   const stock = Number(item.current_stock)
@@ -73,6 +74,11 @@ export default function ItemCard({ item, onAdjust, onEdit }) {
             <Plus size={16} />
           </button>
         </div>
+      </div>
+
+      <div className="mt-2 flex items-center gap-1 text-[11px] text-ink/35">
+        <Clock size={11} />
+        Updated {timeAgo(item.updated_at)}
       </div>
     </div>
   )

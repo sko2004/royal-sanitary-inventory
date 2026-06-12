@@ -49,6 +49,12 @@ export default function App() {
 
   const lowStockItems = items.filter((i) => Number(i.current_stock) <= Number(i.low_stock_threshold))
 
+  // Map of item_id -> timestamp of its most recent stock movement (from the recent movements list)
+  const lastMovedMap = {}
+  for (const m of movements) {
+    if (!lastMovedMap[m.item_id]) lastMovedMap[m.item_id] = m.created_at
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
@@ -113,7 +119,7 @@ export default function App() {
             {tab === 'dashboard' && (
               <Dashboard items={items} movements={movements} lowStockItems={lowStockItems} />
             )}
-            {tab === 'items' && <ItemsTab items={items} onChange={fetchData} />}
+            {tab === 'items' && <ItemsTab items={items} onChange={fetchData} lastMovedMap={lastMovedMap} />}
             {tab === 'activity' && <ActivityTab movements={movements} />}
           </>
         )}
